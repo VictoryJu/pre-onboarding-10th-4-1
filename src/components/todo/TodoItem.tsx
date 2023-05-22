@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 
 import { TodoContext } from "../../context/TodoContext";
 import Spinner from "../common/Spinner";
+import { styled } from "styled-components";
 
 type Props = {
   id: string;
@@ -26,19 +27,43 @@ const TodoItem = ({ id, title }: Props) => {
   };
 
   return (
-    <li className="item">
+    <S.TodoWrap>
       <span>{title}</span>
-      <div className="item-option">
+      <S.TodoLine>
         {!isLoading ? (
           <button onClick={() => handleRemoveTodo(id)}>
-            <FaTrash className="btn-trash" />
+            <S.TrashIcon />
           </button>
         ) : (
           <Spinner />
         )}
-      </div>
-    </li>
+      </S.TodoLine>
+    </S.TodoWrap>
   );
+};
+
+const S = {
+  TodoWrap: styled.li`
+    list-style-type: none;
+    padding: 17px 1.5rem;
+    border-bottom: 1px solid #eaeaea;
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+    &:hover {
+      opacity: 0.85;
+      background-color: #eaeaea;
+    }
+  `,
+  TodoLine: styled.div`
+    float: right;
+  `,
+  TrashIcon: styled(FaTrash)`
+    color: orangered;
+    font-size: 16px;
+    &:hover {
+      opacity: 0.5;
+    }
+  `,
 };
 
 export default TodoItem;
